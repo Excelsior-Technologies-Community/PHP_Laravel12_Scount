@@ -1,84 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Laravel Scout Demo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laravel 12 Scout Demo</title>
 
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: #f4f6f9;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f9;
+            color: #333;
         }
 
         header {
             background: linear-gradient(135deg, #4f46e5, #6366f1);
             color: #fff;
-            padding: 20px 40px;
+            padding: 18px 40px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, .12);
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 24px;
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
         }
 
         nav {
-            margin-top: 10px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         nav a {
             color: #fff;
             text-decoration: none;
-            margin-right: 15px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            transition: .3s;
             font-weight: 500;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            background: rgba(255, 255, 255, .18);
         }
 
         .container {
-            max-width: 900px;
-            margin: 30px auto;
-            background: #fff;
+            max-width: 1200px;
+            margin: 35px auto;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
         }
 
-        hr {
-            border: none;
-            height: 1px;
-            background: #e5e7eb;
-            margin: 20px 0;
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 14px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 5px solid #10b981;
         }
 
         footer {
+            margin-top: 40px;
+            background: #111827;
+            color: #d1d5db;
             text-align: center;
-            padding: 15px;
-            color: #6b7280;
-            font-size: 14px;
+            padding: 20px;
+        }
+
+        footer p {
+            margin: 5px 0;
+        }
+
+        @media(max-width:768px) {
+
+            header {
+                padding: 20px;
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                width: 100%;
+            }
+
+            nav a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .container {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .logo {
+                font-size: 22px;
+            }
+
         }
     </style>
+
 </head>
+
 <body>
 
-<header>
-    <h1>🚀 Laravel 12 + Scout</h1>
-    <nav>
-        <a href="{{ url('/') }}">Home</a>
-        <a href="{{ url('/posts/create') }}">Add Post</a>
-    </nav>
-</header>
+    <header>
 
-<div class="container">
-    @yield('content')
-</div>
+        <div class="navbar">
 
-<footer>
-    © {{ date('Y') }} Laravel Scout Demo
-</footer>
+            <div class="logo">
+                🚀 Laravel Scout
+            </div>
+
+            <nav>
+
+                <a href="{{ route('posts.index') }}">
+                    🏠 Home
+                </a>
+
+                <a href="{{ route('posts.create') }}">
+                    ➕ Add Post
+                </a>
+
+                <a href="{{ route('posts.export') }}">
+                    📄 Export CSV
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+    <div class="container">
+
+        @if(session('success'))
+
+        <div class="alert-success">
+            {{ session('success') }}
+        </div>
+
+        @endif
+
+        @yield('content')
+
+    </div>
+
+    <footer>
+
+        <p><strong>Laravel 12 Scout Demo</strong></p>
+
+        <p>
+            Search • Pagination • Statistics • Export CSV
+        </p>
+
+        <p>
+            © {{ date('Y') }} All Rights Reserved.
+        </p>
+
+    </footer>
 
 </body>
+
 </html>
