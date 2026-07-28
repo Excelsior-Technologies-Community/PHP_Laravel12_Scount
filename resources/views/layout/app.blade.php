@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laravel 12 Scout Demo</title>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <style>
         * {
             margin: 0;
@@ -17,6 +19,10 @@
             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             background: #f4f6f9;
             color: #333;
+
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header {
@@ -65,6 +71,8 @@
             background: #fff;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+
+            flex: 1;
         }
 
         .alert-success {
@@ -77,11 +85,11 @@
         }
 
         footer {
-            margin-top: 40px;
             background: #111827;
             color: #d1d5db;
             text-align: center;
             padding: 20px;
+            margin-top: auto;
         }
 
         footer p {
@@ -146,6 +154,10 @@
                     📄 Export CSV
                 </a>
 
+                <a href="{{ route('search.analytics') }}">
+                    📊 Analytics
+                </a>
+
             </nav>
 
         </div>
@@ -179,6 +191,8 @@
         </p>
 
     </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

@@ -271,6 +271,14 @@
         margin-bottom: 25px;
     }
 
+    mark {
+        background: #facc15;
+        color: #111827;
+        padding: 2px 5px;
+        border-radius: 4px;
+        font-weight: 700;
+    }
+
     /* Responsive */
 
     @media(max-width:992px) {
@@ -315,14 +323,6 @@
 
     }
 </style>
-
-@if(session('success'))
-
-<div style="background:#d1fae5;color:#065f46;padding:15px;border-radius:8px;margin-bottom:20px;">
-    {{ session('success') }}
-</div>
-
-@endif
 
 <div class="dashboard">
 
@@ -384,9 +384,20 @@
 
     </form>
 
-    <a href="{{ route('posts.export') }}" class="export-btn">
-        ⬇ Export CSV
-    </a>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+
+        <a href="{{ route('search.analytics') }}"
+            class="export-btn"
+            style="background:#4f46e5;">
+            📊 Analytics Dashboard
+        </a>
+
+        <a href="{{ route('posts.export') }}"
+            class="export-btn">
+            ⬇ Export CSV
+        </a>
+
+    </div>
 
 </div>
 
@@ -402,6 +413,23 @@
 
     Posts
 
+    @if($search)
+
+    <br><br>
+
+    <span style="color:#4f46e5;font-weight:600;">
+        🔍 Search:
+        "{{ $search }}"
+    </span>
+
+    |
+
+    <span style="color:#059669;font-weight:600;">
+        ⚡ {{ $searchTime }} sec
+    </span>
+
+    @endif
+
 </div>
 
 <div class="wrapper">
@@ -414,9 +442,40 @@
 
         <div class="post-card">
 
-            <h3>{{ $post->title }}</h3>
+            <h3>
+                @if($search)
+                {!! $post->highlight_title !!}
+                @else
+                {{ $post->title }}
+                @endif
+            </h3>
 
-            <p>{{ Str::limit($post->content,250) }}</p>
+            @if($search)
+
+            <div style="margin-bottom:12px;">
+
+                <span style="
+        background:#eef2ff;
+        color:#4338ca;
+        padding:5px 12px;
+        border-radius:30px;
+        font-size:13px;
+        font-weight:600;
+    ">
+                    ✓ Search Match
+                </span>
+
+            </div>
+
+            @endif
+
+            <p>
+                @if($search)
+                {!! Str::limit($post->highlight_content, 250) !!}
+                @else
+                {{ Str::limit($post->content, 250) }}
+                @endif
+            </p>
 
             <div class="post-meta">
 
