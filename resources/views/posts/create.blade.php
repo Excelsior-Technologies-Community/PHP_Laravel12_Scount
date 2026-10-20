@@ -2,93 +2,66 @@
 
 @section('content')
 
-<style>
-    .form-card {
-        max-width: 600px;
-        margin: auto;
-        background: #f9fafb;
-        padding: 25px;
-        border-radius: 12px;
-        border: 1px solid #e5e7eb;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
-    }
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm border-0 rounded-4">
+            <div class="card-header bg-white py-3 border-0 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold mb-0 text-dark"><i class="bi bi-file-earmark-plus-fill text-primary me-2"></i>Create New Searchable Post</h5>
+                <a href="{{ url('/') }}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+                    <i class="bi bi-arrow-left me-1"></i>Back to Search
+                </a>
+            </div>
+            <div class="card-body p-4">
+                @if ($errors->any())
+                    <div class="alert alert-danger rounded-3 border-0 shadow-sm mb-4">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
 
-    .form-card h2 {
-        margin-bottom: 20px;
-        color: #111827;
-        text-align: center;
-    }
+                <form method="POST" action="{{ route('posts.store') }}">
+                    @csrf
 
-    .form-group {
-        margin-bottom: 18px;
-    }
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Post Title <span class="text-danger">*</span></label>
+                        <input type="text" name="title" class="form-control form-control-lg rounded-3 shadow-none border" placeholder="e.g. Master Laravel Scout Search & Typo Tolerance" value="{{ old('title') }}" required>
+                        <small class="text-muted">Indexed automatically for Scout full-text queries and typeahead autocomplete.</small>
+                    </div>
 
-    .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        font-weight: 600;
-        color: #374151;
-    }
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Category <span class="text-danger">*</span></label>
+                            <select name="category" class="form-select rounded-3 shadow-none border" required>
+                                <option value="" disabled selected>-- Select Category --</option>
+                                @foreach($categories as $cat)
+                                    <option value="{{ $cat }}" {{ old('category') == $cat ? 'selected' : '' }}>{{ $cat }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold">Tags (comma-separated)</label>
+                            <input type="text" name="tags" class="form-control rounded-3 shadow-none border" placeholder="e.g. laravel, scout, database, php" value="{{ old('tags') }}">
+                        </div>
+                    </div>
 
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        font-size: 15px;
-        resize: vertical;
-    }
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Post Content <span class="text-danger">*</span></label>
+                        <textarea name="content" rows="6" class="form-control rounded-3 shadow-none border" placeholder="Write comprehensive post content for contextual snippet highlighting..." required>{{ old('content') }}</textarea>
+                    </div>
 
-    .form-group input:focus,
-    .form-group textarea:focus {
-        outline: none;
-        border-color: #4f46e5;
-        box-shadow: 0 0 0 2px rgba(79,70,229,0.2);
-    }
-
-    .form-actions {
-        text-align: center;
-        margin-top: 25px;
-    }
-
-    .btn-primary {
-        background: #4f46e5;
-        color: #fff;
-        padding: 12px 26px;
-        border-radius: 10px;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background 0.2s, transform 0.2s;
-    }
-
-    .btn-primary:hover {
-        background: #4338ca;
-        transform: translateY(-2px);
-    }
-</style>
-
-<div class="form-card">
-    <h2>➕ Add New Post</h2>
-
-    <form method="POST" action="{{ route('posts.store') }}">
-        @csrf
-
-        <div class="form-group">
-            <label>Title</label>
-            <input type="text" name="title" placeholder="Enter post title" required>
+                    <div class="d-flex justify-content-between align-items-center pt-2">
+                        <a href="{{ url('/') }}" class="text-muted text-decoration-none">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4 py-2 rounded-pill fw-semibold shadow-sm">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Save & Auto-Index
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-
-        <div class="form-group">
-            <label>Content</label>
-            <textarea name="content" rows="5" placeholder="Write post content..." required></textarea>
-        </div>
-
-        <div class="form-actions">
-            <button type="submit" class="btn-primary">💾 Save Post</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 @endsection
