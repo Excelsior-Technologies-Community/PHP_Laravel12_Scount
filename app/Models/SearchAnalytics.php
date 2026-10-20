@@ -9,6 +9,7 @@ class SearchAnalytics extends Model
     protected $fillable = [
         'keyword',
         'search_count',
+        'results_count',
         'last_searched_at',
         'ip_address',
     ];
